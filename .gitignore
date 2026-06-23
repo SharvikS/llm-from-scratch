@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Data & model artifacts (regenerated locally)
+data/processed/*.bin
+data/processed/*.json
+data/raw/*.txt
+checkpoints/*.pt
+
+# Generated plots / outputs
+notebooks/*.png
+*.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/

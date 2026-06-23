@@ -1,0 +1,19 @@
+[project]
+name = "transformer-from-scratch"
+version = "0.1.0"
+description = "A decoder-only Transformer LLM built from scratch in pure PyTorch — no black-box libraries."
+requires-python = ">=3.10"
+
+dependencies = [
+  "torch>=2.1",
+  "numpy>=1.26",
+  "tqdm",
+  "pyyaml",
+  "matplotlib",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "jupyter", "rich"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

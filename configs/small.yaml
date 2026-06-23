@@ -1,0 +1,19 @@
+# Small ~10M param config — full training run. Fits an RTX 5070 12GB with
+# gradient accumulation (effective batch = batch_size * grad_accum = 32).
+vocab_size: 50257
+d_model: 256
+n_heads: 8
+n_layers: 6
+d_ff: 1024
+block_size: 256
+dropout: 0.1
+pos_encoding: rope
+batch_size: 8
+gradient_accumulation_steps: 4
+max_steps: 50000
+eval_interval: 500
+save_interval: 2000
+learning_rate: 3e-4
+weight_decay: 0.1
+warmup_steps: 2000
+min_lr: 3e-5
