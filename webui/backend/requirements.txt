@@ -1,0 +1,5 @@
+# Web UI backend — install on top of the repo's root requirements.txt
+# (which provides torch / numpy / pyyaml).
+fastapi>=0.110
+uvicorn[standard]>=0.29
+pydantic>=2.6
