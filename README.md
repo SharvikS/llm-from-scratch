@@ -18,6 +18,44 @@ The code as implemented improves on the original plan in a few places:
 
 ---
 
+## Run it end-to-end
+
+The full pipeline — download, tokenize, sanity-check, train, evaluate,
+generate, visualize. Cross-platform (Windows / macOS / Linux).
+
+```bash
+# 1. Install (use the CUDA build of torch on your GPU box)
+pip install -r requirements.txt
+# GPU: pip install torch --index-url https://download.pytorch.org/whl/cu124
+
+# 2. Verify everything is wired correctly
+pytest -q
+
+# 3. Get data + tokenize into train/val .bin files
+python scripts/download_data.py
+python scripts/prepare_data.py --input data/raw/shakespeare.txt --output data/processed/
+
+# 4. Prove the model can learn (overfits one batch to ~0 loss)
+python scripts/overfit_check.py
+
+# 5. Train the tiny (~1M param) model
+python scripts/train.py --config configs/tiny.yaml
+
+# 6. Evaluate + generate + visualize attention
+python scripts/evaluate.py --checkpoint checkpoints/step_005000.pt
+python scripts/generate.py --checkpoint checkpoints/step_005000.pt --prompt "ROMEO:" --tokens 300 --temperature 0.8 --top_k 40
+python scripts/visualize.py --checkpoint checkpoints/step_005000.pt --prompt "To be or not"
+
+# Scale up to the 10M param model when ready
+python scripts/train.py --config configs/small.yaml
+```
+
+Every module under `model/`, `tokenizer/`, `training/`, `inference/`, and
+`utils/` is fully implemented — no stubs. The phase-by-phase guide below
+documents how each piece works.
+
+---
+
 # Transformer from Scratch — Detailed Development Plan
 ### Phase-by-Phase Build Guide
 
