@@ -17,6 +17,13 @@ data/processed/*.json
 data/raw/*.txt
 checkpoints/*.pt
 
+# ...but the starter tiny-shakespeare dataset IS bundled so the repo is
+# runnable out of the box. Regenerate/replace with scripts/prepare_data.py.
+!data/raw/shakespeare.txt
+!data/processed/train.bin
+!data/processed/val.bin
+!data/processed/tokenizer.json
+
 # Generated plots / outputs
 notebooks/*.png
 *.ipynb_checkpoints/
