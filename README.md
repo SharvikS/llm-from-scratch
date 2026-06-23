@@ -6,6 +6,18 @@ Building a Transformer LLM from scratch — pure PyTorch, no black-box libraries
 
 ---
 
+## Implementation Notes (deliberate upgrades over the plan)
+
+The code as implemented improves on the original plan in a few places:
+
+- **Working KV cache** — fully integrated via `Transformer.step()` and `inference/kv_cache.py:generate_cached()`, not a stub. `MultiHeadSelfAttention` takes optional `past_kv` / `use_cache` / `input_pos`, but stays backward-compatible: the default call still returns `(out, weights)`.
+- **Cache-correctness tests** — `tests/test_attention.py` and `tests/test_model.py` assert that cached, token-by-token decoding matches a single full forward pass exactly (the plan's Phase 10 sanity check, baked into the suite).
+- **Config round-trip fix** — `training/checkpointing.py` serializes only declared dataclass fields, so the derived `d_k` attribute doesn't break `ModelConfig` reconstruction on load.
+- **Robust top-p sampler** — `inference/sampler.py` corrects the nucleus (top-p) scatter logic from the plan's sketch.
+- **Import shims** — a root `conftest.py` plus `sys.path` inserts in each script let both `pytest` and `python scripts/...` resolve absolute imports from the repo root.
+
+---
+
 # Transformer from Scratch — Detailed Development Plan
 ### Phase-by-Phase Build Guide
 
